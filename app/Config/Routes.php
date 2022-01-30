@@ -57,6 +57,13 @@ $routes->get('/admin/transaksi/delete/(:num)', 'Transaksi::delete/$1');
 $routes->get('/admin/transaksi/edit/(:num)', 'Transaksi::edit/$1');
 $routes->post('/admin/transaksi/edit_proses', 'Transaksi::edit_proses');
 
+$routes->get('/admin/pembayaran', 'PembayaranController::index',['as'=>'index_pembayaran']);
+$routes->get('/admin/pembayaran/lunas/(:num)', 'PembayaranController::lunas/$1');
+$routes->get('/admin/pembayaran/belum_lunas/(:num)', 'PembayaranController::belum_lunas/$1');
+$routes->get('/admin/pembayaran/delete/(:num)', 'PembayaranController::delete/$1');
+$routes->get('/admin/pembayaran/edit/(:num)', 'PembayaranController::edit/$1');
+$routes->post('/admin/pembayaran/edit_proses', 'PembayaranController::edit_proses');
+
 $routes->get('/admin/laporan', 'Transaksi::generate_pdf',['as'=>'laporan_transaksi']);
 
 $routes->get('/kasir/login', 'Kasir::login');

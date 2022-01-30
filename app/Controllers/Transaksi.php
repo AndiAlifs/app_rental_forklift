@@ -89,10 +89,18 @@ class Transaksi extends BaseController
 			'status_kembali' => 'Belum Kembali',
 			'pembayaran' => $_POST['metode'],
 		];
-
-		// var_dump($data);
+		
 		model('TransaksiModel')->insert($data);
+		$newTransaksi = model('TransaksiModel')->orderBy('id','DESC')->limit(1)->get()->getResult();
+		
+		$data = [
+			'id_transaksi' => $newTransaksi[0]->id,
+		];
+
+		model('PembayaranModel')->save($data);
+		
 		model('ForkliftModel')->update($_POST['id'],['status' => 0]);
+
 		session()->setFlashdata('pesan','Reservasi Berhasil Dibuat');
 		return redirect()->to('/');
 	}
@@ -106,7 +114,14 @@ class Transaksi extends BaseController
 
 	public function generate_pdf()
 	{	
-		$data['transaksi'] = model('transaksiModel')->get()->getResult();
+		if (isset($_GET['dari']) && isset($_GET['dari'])) {
+			$data['transaksi'] = model('transaksiModel')
+									->where('tanggal_rental >=',$_GET['dari'])
+									->where('tanggal_rental <=',$_GET['sampai'])
+									->get()->getResult();
+		} else {
+			$data['transaksi'] = model('transaksiModel')->get()->getResult();
+		}
 		
 		$dompdf = new \Dompdf\Dompdf();
 		$dompdf->loadHtml(view('admin/laporan',$data));
@@ -114,15 +129,5 @@ class Transaksi extends BaseController
         $dompdf->render();
         $dompdf->stream(); //nama file pdf
 
-		// return redirect()->to('admin/transaksi');
 	}
-
-	// public function filter_view()
-	// {
-	// 	echo view('template_admin\header');
-	// 	echo view('template_admin\sidebar');
-	// 	echo view('admin\filter_transaksi');
-	// 	echo view('template_admin\footer');
-
-	// }
 }

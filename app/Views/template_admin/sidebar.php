@@ -21,8 +21,11 @@
         <ul class="sidebar-menu">
             <li><a class="nav-link" href="<?=base_url('admin/transaksi')?>"><i class="fas fa-random"></i> <span>Transaksi</span></a></li>
         </ul>
-        <ul class="sidebar-menu">
+        <!-- <ul class="sidebar-menu">
             <li><a class="nav-link" href="<?=base_url('admin/laporan')?>"><i class="fas fa-archive"></i> <span>Laporan</span></a></li>
+        </ul> -->
+        <ul class="sidebar-menu">
+            <li><a class="nav-link" href="<?=base_url('admin/pembayaran')?>"><i class="fas fa-money-bill-alt"></i><span>Pembayaran</span></a></li>
         </ul>
 </div>
 </aside>
